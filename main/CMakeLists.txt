@@ -1,7 +1,7 @@
 idf_component_register(
     SRCS "Main.cpp"
     INCLUDE_DIRS "."
-    REQUIRES freertos esp_system soc Contribs
+    REQUIRES freertos esp_system soc Contribs Platform
 )
 
 
