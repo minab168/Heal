@@ -15,23 +15,27 @@
 #define APP_CORE_INTERFACE_CORE_HPP_
 
 #include "System.hpp"
-#include "../../Supervisor/Interface/Supervisor.hpp"
-#include "Common/Types/Array.hpp"
+#include "Communication/Interface.hpp"
+#include "Shared/Task.hpp"
+
 
 namespace app {
 
+    using namespace sys;
+
     template<const Size STACK_SIZE = 2048>
     class Core {
-        TaskStatus* _status = NULL_PTR;
+        TaskCtx*               _ctx = NULL_PTR;
+        CommunicationInterface _comm = {};
 
       public:
-        static sys::TaskStackType stack[STACK_SIZE];
-        static sys::StaticTask    tcb;
+        static TaskStackType stack[STACK_SIZE];
+        static StaticTask    tcb;
 
         [[noreturn]]
         static Void entry(Void*) noexcept;
 
-        constexpr Core(TaskStatus* status) noexcept : _status(status) {}
+        explicit constexpr Core(TaskCtx* ctx) noexcept : _ctx(ctx) {}
     };
 }
 

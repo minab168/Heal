@@ -1,6 +1,13 @@
-list(APPEND EXTRA_COMPONENT_DIRS
-    ${CMAKE_CURRENT_LIST_DIR}/Supervisor
-    ${CMAKE_CURRENT_LIST_DIR}/Communication
-    ${CMAKE_CURRENT_LIST_DIR}/Sensors
-    ${CMAKE_CURRENT_LIST_DIR}/Core
+idf_component_register(
+    SRC_DIRS     "Sources/Core" "Sources/Supervisor"
+    INCLUDE_DIRS "Interfaces"
+    REQUIRES     Contribs Common
 )
+
+
+#list(APPEND EXTRA_COMPONENT_DIRS
+#    ${CMAKE_CURRENT_LIST_DIR}/Supervisor
+#    ${CMAKE_CURRENT_LIST_DIR}/Communication
+#    ${CMAKE_CURRENT_LIST_DIR}/Sensors
+#    ${CMAKE_CURRENT_LIST_DIR}/Core
+#)

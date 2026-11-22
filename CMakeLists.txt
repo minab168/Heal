@@ -10,7 +10,7 @@ set(EXTRA_COMPONENT_DIRS
 )
 
 
-include(${CMAKE_CURRENT_LIST_DIR}/App/CMakeLists.txt)
+#include(${CMAKE_CURRENT_LIST_DIR}/App/CMakeLists.txt)
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 
 project(Heal)

@@ -11,26 +11,27 @@
  */
 
 
-#include "../Interface/Core.hpp"
 
 #include "Common/Base/Interface/Lang.hpp"
 #include "Common/Operations/BitField.hpp"
+#include "Core/Core.hpp"
+#include "Shared/Task.hpp"
 
 
 namespace app {
 
     template<const Size STACK_SIZE>
     Void Core<STACK_SIZE>::entry(Void* args) noexcept {
-        mut status = static_cast<TaskStatus*>(args);
-        mut obj = Core<STACK_SIZE>(status);
+        mut ctx = static_cast<TaskCtx*>(args);
+        mut obj = Core<STACK_SIZE>(ctx);
 
         let bit_counter = sure::BitField<U8>(0, 4);
 
         loop {
             log_info_("This is `Core`!");
 
-            let count = bit_counter.extract(*status);
-            *status = bit_counter.write(*status, count + 1);
+            let count = bit_counter.extract(ctx->status);
+            ctx->status = bit_counter.write(ctx->status, count + 1);
 
             delayTask(200);
         }

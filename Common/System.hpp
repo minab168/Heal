@@ -55,8 +55,8 @@ namespace sys {
     }
 
 
-    inline Void delayTask(TickType tick) {
-        return vTaskDelay(tick);
+    inline Void delayTask(const Size ms) {
+        return vTaskDelay(pdMS_TO_TICKS(ms));
     }
 }
 
