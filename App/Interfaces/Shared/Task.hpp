@@ -46,7 +46,8 @@ namespace app {
         U8                      id;
         Size                    stack_size;
         TaskPriority            priority;
-        Size                    wait_period;
+        Size                    init_timeout;
+        Size                    period_timeout;
         TaskStackType*          task_stack;
         StaticTask*             tcb;
         TaskFunction            entry;

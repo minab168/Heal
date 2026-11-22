@@ -22,6 +22,7 @@ namespace app {
     Void Supervisor<NUM_OF_TASKS>::_initializeTasks() noexcept {
         for (mut i = 0; i < NUM_OF_TASKS; ++i) {
             let& task_info = this->_tasks[i];
+            log_info_("Creating task `%s`...", task_info.name);
             mut handle = createTask(
                 task_info.entry,
                 task_info.name,
@@ -39,12 +40,14 @@ namespace app {
         // wait for all task initialized
         delayTask(1);
 
+        log_info_("Checking tasks initialized...");
         for (mut i = 0; i < NUM_OF_TASKS; ++i) {
-            if (this->_status_map[i].state != TaskState::Running) {
+            if (this->_status_map[i].state != TaskState::Ready) {
                 log_err_("Task `%s` failed to run", this->_tasks[i].name);
-                if (this->_status_map[i].state == TaskState::Faulted) {
-                    log_err_("Error code is `%d`", this->_status_map[i].error);
-                }
+                SURE_LOG_ERR_ON_TRUE(
+                    this->_status_map[i].state == TaskState::Faulted,
+                    "Error code is `%d`", this->_status_map[i].error
+                );
                 return;
             }
         }
@@ -57,6 +60,7 @@ namespace app {
 
     template<Size NUM_OF_TASKS>
     Void Supervisor<NUM_OF_TASKS>::takeControl() noexcept {
+        log_info_("Initializing tasks...");
         this->_initializeTasks();
 
         loop {

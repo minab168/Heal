@@ -25,14 +25,11 @@ namespace app {
         mut ctx = static_cast<TaskCtx*>(args);
         mut obj = Core<STACK_SIZE>(ctx);
 
-        let bit_counter = sure::BitField<U8>(0, 4);
+        obj._ctx->status.state = TaskState::Ready;
 
         loop {
             log_info_("This is `Core`!");
-
-            let count = bit_counter.extract(ctx->status);
-            ctx->status = bit_counter.write(ctx->status, count + 1);
-
+            obj._ctx->status.counter += 1;
             delayTask(200);
         }
     }
